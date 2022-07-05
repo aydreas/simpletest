@@ -2,7 +2,7 @@ FROM node:16-alpine as base
 
 WORKDIR /var/www
 
-COPY package*.json /var/www
+COPY package*.json /var/www/
 
 EXPOSE ${PORT}
 
