@@ -20,7 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: docker login
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      run: | # login to docker hub
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:prod
     - name: Push the Docker image to production
