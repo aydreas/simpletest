@@ -1,0 +1,22 @@
+services:
+  simpletest: 
+    image: daspete/simpletest:latest
+    container_name: simpletest
+    build: 
+      context: .
+      target: dev
+    working_dir: /var/www
+    env_file: .env
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./app:/var/www/app
+    command: sh -c "nodemon app/index.js"
+    networks:
+      - simplenet
+
+networks:
+  simplenet:
+    driver: bridge
