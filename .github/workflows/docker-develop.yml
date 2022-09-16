@@ -2,9 +2,9 @@ name: Latest docker image build
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "development" ]
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
@@ -12,16 +12,13 @@ env:
   REPO_NAME: ${{secrets.REPO_NAME}}
 
 jobs:
-
   build-and-push:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: docker login
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:latest
+      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:development
     - name: Push the Docker image to latest
-      run: docker push $DOCKER_USER/$REPO_NAME:latest
+      run: docker push $DOCKER_USER/$REPO_NAME:development
