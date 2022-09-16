@@ -1,6 +1,7 @@
 name: Latest docker image build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "development" ]
   pull_request:
@@ -10,18 +11,16 @@ env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REPO_NAME: ${{secrets.REPO_NAME}}
+  DOCKER_NAMESPACE: ${{secrets.DOCKER_NAMESPACE}}
 
 jobs:
-
   build-and-push:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: docker login
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:latest
-    - name: Push the Docker image to latest
-      run: docker push $DOCKER_USER/$REPO_NAME:latest
+      - uses: actions/checkout@v3
+      - name: docker login
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag $DOCKER_NAMESPACE/$REPO_NAME:development
+      - name: Push the Docker image to latest
+        run: docker push $DOCKER_NAMESPACE/$REPO_NAME:development
