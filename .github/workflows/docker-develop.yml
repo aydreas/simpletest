@@ -10,6 +10,7 @@ env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   REPO_NAME: ${{secrets.REPO_NAME}}
+  DOCKER_NAMESPACE: ${{secrets.DOCKER_NAMESPACE}}
 
 jobs:
   build-and-push:
@@ -19,6 +20,6 @@ jobs:
     - name: docker login
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:development
+      run: docker build . --file Dockerfile --tag $DOCKER_NAMESPACE/$REPO_NAME:development
     - name: Push the Docker image to latest
-      run: docker push $DOCKER_USER/$REPO_NAME:development
+      run: docker push $DOCKER_NAMESPACE/$REPO_NAME:development
